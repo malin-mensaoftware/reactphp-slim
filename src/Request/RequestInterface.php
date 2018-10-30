@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * Request Interface file for a React Adapter request object
  *
@@ -18,12 +17,10 @@ declare(strict_types=1);
  */
 namespace mbarquin\reactSlim\Request;
 
-use React\Http\Request as ReactRequest;
-
 /**
  * Contract to have a request to adapt a react request object to a new one
  */
 interface RequestInterface
 {
-    static public function createFromReactRequest(ReactRequest $request);
+    static public function createFromReactRequest(\React\Http\Request $request);
 }

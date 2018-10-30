@@ -1,7 +1,6 @@
 <?php
-declare(strict_types=1);
 /**
- * Request Interface file for an React Adapter request object
+ * Request Interface file for an React Adapter request objectv
  *
  * (c) Moisés Barquín <moises.barquin@gmail.com>
  *
@@ -18,9 +17,6 @@ declare(strict_types=1);
  */
 namespace mbarquin\reactSlim\Response;
 
-use Slim\Http\Response as SlimPHPResponse;
-use React\Http\Response as ReactResponse;
-
 /**
  * Contract to have a request to adapt a react request object to a new one
  */
@@ -30,22 +26,18 @@ interface ResponseInterface
      * It performs the setup of a reactPHP response from another response
      * object and finishes the communication
      *
-     * @param ReactResponse    $reactResp    ReactPHP native response object
-     * @param SlimPHPResponse  $slimResponse SlimPHP native response object
-     * @param boolean          $endRequest   If true, response flush will be finished
+     * @param \React\Http\Response $reactResp    ReactPHP native response object
+     * @param \Slim\Http\Response  $slimResponse SlimPHP native response object
+     * @param boolean              $endRequest   If true, response flush will be finished
      *
      * @return void
      */
-    static public function setReactResponse(
-        ReactResponse $reactResp,
-        SlimPHPResponse $slimResponse,
-        bool $endRequest = false
-    );
+    static public function setReactResponse(\React\Http\Response $reactResp, \Psr\Http\Message\ResponseInterface $slimResponse, $endRequest = false);
 
     /**
      * Returns a new response object instance
      *
-     * @return SlimPHPResponse
+     * @return \Slim\Http\Response
      */
-    static public function createResponse() :SlimPHPResponse;
+    static public function createResponse();
 }

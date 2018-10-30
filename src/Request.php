@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * Legacy request adapter class file for a React request object
  *
@@ -18,29 +17,25 @@ declare(strict_types=1);
  */
 namespace mbarquin\reactSlim;
 
-use Slim\Http\ {
-    Headers as SlimPHPHeaders,
-    Uri as SlimPHPUri,
-    Request as SlimPHPRequest,
-    RequestBody as SlimPHPRequestBody
-};
-use React\Http\Request as ReactRequest;
+use Slim\Http\Headers;
+use Slim\Http\Uri;
+use Slim\Http\RequestBody;
 
 /**
  * Legacy request adapter class file for a React request object
  */
-class Request extends SlimPHPRequest
+class Request extends \Slim\Http\Request
 {
     /**
      * Creates a new request object from the data of a reactPHP request object
      *
-     * @param ReactRequest $request ReactPHP native request object
+     * @param \React\Http\Request $request ReactPHP native request object
      *
-     * @return self
+     * @return \Slim\Http\Request
      */
-    static public function createFromReactRequest(ReactRequest $request) :self
+    static public function createFromReactRequest(\React\Http\Request $request)
     {
-        $slimHeads = new SlimPHPHeaders();
+        $slimHeads = new Headers();
         foreach($request->getHeaders() as $reactHeadKey => $reactHead) {
             $slimHeads->add($reactHeadKey, $reactHead);
             if($reactHeadKey === 'Host') {
@@ -51,27 +46,17 @@ class Request extends SlimPHPRequest
             }
         }
 
-        $slimUri = new SlimPHPUri(
-            'http',
-            $host[0],
-            (int) $host[1],
-            $request->getPath(),
-            $request->getQuery()
-        );
+        $slimUri = new Uri('http', $host[0], (int)$host[1], $request->getPath(), $request->getQuery());
 
         $cookies = [];
         $serverParams = $_SERVER;
         $serverParams['SERVER_PROTOCOL'] = 'HTTP/'.$request->getHttpVersion();
 
-        $slimBody = new SlimPHPRequestBody();
+        $slimBody = new RequestBody();
 
         return new self(
-            $request->getMethod(),
-            $slimUri,
-            $slimHeads,
-            $cookies,
-            $serverParams,
-            $slimBody
-        );
+                $request->getMethod(), $slimUri, $slimHeads, $cookies,
+                $serverParams, $slimBody
+            );
     }
 }

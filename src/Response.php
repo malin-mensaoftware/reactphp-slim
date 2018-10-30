@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 /**
  * Legacy Response adapter class file.
  * It performs the setup of a reactPHP response and finishes the communication
@@ -19,25 +18,22 @@ declare(strict_types=1);
  */
 namespace mbarquin\reactSlim;
 
-use Slim\Http\Response as SlimPHPResponse;
-use React\Http\Response as ReactResponse;
-
 /**
  * Response adapter class
  * It performs the setup of a reactPHP response and finishes the communication
  */
-class Response extends SlimPHPResponse
+class Response extends \Slim\Http\Response
  {
     /**
-     * It performs the setup of a reactPHP response from a SlimPHP response
+     * It performs the setup of a reactPHP response from a SlimpPHP response
      * object and finishes the communication
      *
-     * @param ReactResponse $reactResp   ReactPHP native response object
-     * @param bool          $endRequest  If true, response flush will be finished
+     * @param \React\Http\Response $reactResp    ReactPHP native response object
+     * @param boolean              $endRequest   If true, response flush will be finished
      *
      * @return void
      */
-    public function setReactResponse(ReactResponse $reactResp, bool $endRequest = false)
+    public function setReactResponse(\React\Http\Response $reactResp, $endRequest = false)
     {
         $reactResp->writeHead($this->getStatusCode(), $this->getHeaders());
         $reactResp->write($this->getBody());
