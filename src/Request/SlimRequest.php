@@ -78,7 +78,7 @@ class SlimRequest implements RequestInterface
             }
         }
 
-        $slimUri = new Uri('http', $host[0], (int)$host[1], $request->getPath(), $request->getQuery());
+        $slimUri = new Uri('http', $host[0], (int)$host[1], $request->getPath(), http_build_query($request->getQuery()));
 
         $serverParams                    = $_SERVER;
         $serverParams['SERVER_PROTOCOL'] = 'HTTP/'.$request->getHttpVersion();
