@@ -46,7 +46,7 @@ class Request extends \Slim\Http\Request
             }
         }
 
-        $slimUri = new Uri('http', $host[0], (int)$host[1], $request->getPath(), $request->getQuery());
+        $slimUri = new Uri('http', $host[0], (int)$host[1], $request->getPath(), build_query($request->getQuery()));
 
         $cookies = [];
         $serverParams = $_SERVER;
